@@ -3,33 +3,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Binance AI Demo Trading</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Binance Futures Demo Trading</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#e8edf7;font-family:Arial,sans-serif}
-header{padding:20px;background:#121a2e;border-bottom:1px solid #29344c}
-h1{font-size:22px;margin:0 0 8px;color:#f0b90b}
-.sub{color:#9ba9c2;font-size:12px}
-main{padding:14px;max-width:1100px;margin:auto}
+body{margin:0;background:#0b1020;color:#edf2ff;font-family:Arial,sans-serif}
+header{padding:20px;background:#151f35;border-bottom:1px solid #33415e}
+h1{color:#f0b90b;font-size:23px;margin:0 0 7px}
+main{max-width:1000px;margin:auto;padding:14px}
+.card{background:#151f35;border:1px solid #2c3b58;border-radius:12px;padding:15px;margin-bottom:13px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.card{background:#151f35;border:1px solid #293750;border-radius:12px;padding:14px;margin-bottom:12px}
-.card small{color:#9ba9c2}
-.value{font-size:23px;font-weight:bold;margin-top:8px}
-.green{color:#24d18b}.red{color:#ff6376}.yellow{color:#f0b90b}
-button{border:0;border-radius:8px;padding:12px 15px;font-weight:bold;cursor:pointer;margin:4px 3px 4px 0}
-.primary{background:#f0b90b;color:#111}
-.secondary{background:#293750;color:white}
-.danger{background:#9d3043;color:white}
-button:disabled{opacity:.5}
-.status{padding:10px;background:#10192b;border-radius:8px;margin:10px 0;color:#aab8ce;font-size:13px}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:650px}
-th,td{padding:10px 7px;border-bottom:1px solid #293750;text-align:left}
-th{color:#aab8ce}
+.stat{background:#0e172a;padding:12px;border-radius:9px}
+.stat small{color:#aab7cc;font-size:12px}
+.stat strong{display:block;font-size:21px;margin-top:7px}
+button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;margin:4px 3px 4px 0;cursor:pointer}
+.start{background:#f0b90b;color:#111}
+.stop{background:#34445f;color:white}
+.reset{background:#a83249;color:white}
+.status{background:#0c172b;border-radius:8px;padding:12px;font-size:13px;color:#b8c5d9;line-height:1.5}
+.green{color:#26d99a}.red{color:#ff687b}.yellow{color:#f0b90b}
 .tablewrap{overflow-x:auto}
-.badge{padding:4px 7px;border-radius:5px;background:#263650}
-.note{font-size:12px;line-height:1.6;color:#aab8ce}
-input{background:#0b1020;color:white;border:1px solid #34445e;padding:10px;border-radius:7px;width:100%}
+table{width:100%;min-width:600px;border-collapse:collapse;font-size:12px}
+td,th{padding:10px 7px;border-bottom:1px solid #2c3b58;text-align:left}
+th{color:#aab7cc}
+small,.muted{color:#aab7cc}
+.note{font-size:12px;color:#aab7cc;line-height:1.6}
 @media(min-width:650px){.grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
@@ -37,43 +35,43 @@ input{background:#0b1020;color:white;border:1px solid #34445e;padding:10px;borde
 
 <header>
 <h1>⚡ Binance Futures Demo</h1>
-<div class="sub">Virtual Trading System · No Real Orders</div>
+<div class="muted">Virtual Trading · Live Market Data · No Real Orders</div>
 </header>
 
 <main>
 
 <div class="grid">
-<div class="card"><small>Virtual Balance</small><div class="value" id="balance">20.00 USDT</div></div>
-<div class="card"><small>Equity</small><div class="value" id="equity">20.00 USDT</div></div>
-<div class="card"><small>Realized P/L</small><div class="value" id="pnl">0.00 USDT</div></div>
-<div class="card"><small>Win Rate</small><div class="value" id="winrate">0%</div></div>
-<div class="card"><small>Open Trades</small><div class="value" id="openCount">0</div></div>
-<div class="card"><small>Wins</small><div class="value green" id="wins">0</div></div>
-<div class="card"><small>Losses</small><div class="value red" id="losses">0</div></div>
-<div class="card"><small>Scanned Coins</small><div class="value" id="scanned">0</div></div>
+<div class="stat"><small>Virtual Balance</small><strong id="balance">20.0000 USDT</strong></div>
+<div class="stat"><small>Account Equity</small><strong id="equity">20.0000 USDT</strong></div>
+<div class="stat"><small>Realized Profit / Loss</small><strong id="profit">0.0000 USDT</strong></div>
+<div class="stat"><small>Win Rate</small><strong id="winrate">0%</strong></div>
+<div class="stat"><small>Open Trades</small><strong id="openCount">0</strong></div>
+<div class="stat"><small>Total Wins</small><strong id="wins">0</strong></div>
+<div class="stat"><small>Total Losses</small><strong id="losses">0</strong></div>
+<div class="stat"><small>Coins Scanned</small><strong id="scanned">0</strong></div>
 </div>
 
 <div class="card">
-<h3>⚙️ Demo Settings</h3>
+<h3>⚙️ Trading Settings</h3>
 <div class="grid">
-<div><small>Starting Capital (USDT)</small><div class="value">20</div></div>
-<div><small>Risk per Trade</small><div class="value">0.05 USDT</div></div>
-<div><small>Maximum Leverage</small><div class="value">3x</div></div>
-<div><small>Take Profit</small><div class="value">1.5R</div></div>
+<div class="stat"><small>Starting Capital</small><strong>20 USDT</strong></div>
+<div class="stat"><small>Risk per Trade</small><strong>0.05 USDT</strong></div>
+<div class="stat"><small>Maximum Leverage</small><strong>3x</strong></div>
+<div class="stat"><small>Take Profit</small><strong>1.5R</strong></div>
 </div>
-<p class="note">Fixed demo settings. These values do not place real Binance orders.</p>
-<button class="primary" id="startBtn" onclick="startScanner()">▶ Start Demo Scanner</button>
-<button class="secondary" onclick="stopScanner()">■ Stop Scanner</button>
-<button class="danger" onclick="resetDemo()">Reset Demo</button>
-<div class="status" id="status">Ready. Press Start Demo Scanner.</div>
+<br>
+<button class="start" id="startButton" onclick="startDemo()">▶ START SCANNER</button>
+<button class="stop" onclick="stopDemo()">■ STOP</button>
+<button class="reset" onclick="resetDemo()">RESET DEMO</button>
+<div class="status" id="status">Ready. Press START SCANNER.</div>
 </div>
 
 <div class="card">
-<h3>📊 Latest Signals</h3>
+<h3>📡 Market Signals</h3>
 <div class="tablewrap">
 <table>
-<thead><tr><th>Coin</th><th>Signal</th><th>Price</th><th>RSI</th><th>Timeframe</th></tr></thead>
-<tbody id="signals"><tr><td colspan="5">No signals yet</td></tr></tbody>
+<thead><tr><th>Symbol</th><th>Direction</th><th>Price</th><th>RSI</th><th>Confirmation</th></tr></thead>
+<tbody id="signals"><tr><td colspan="5">Waiting for scan...</td></tr></tbody>
 </table>
 </div>
 </div>
@@ -82,415 +80,414 @@ input{background:#0b1020;color:white;border:1px solid #34445e;padding:10px;borde
 <h3>📈 Open Virtual Trades</h3>
 <div class="tablewrap">
 <table>
-<thead><tr><th>Coin</th><th>Side</th><th>Entry</th><th>Current</th><th>SL</th><th>TP</th><th>Unrealized P/L</th></tr></thead>
+<thead><tr><th>Symbol</th><th>Side</th><th>Entry</th><th>Current</th><th>Stop</th><th>Target</th><th>P/L</th></tr></thead>
 <tbody id="openTrades"><tr><td colspan="7">No open trades</td></tr></tbody>
 </table>
 </div>
 </div>
 
 <div class="card">
-<h3>📚 Trade History</h3>
-<button class="secondary" onclick="exportHistory()">Export History</button>
+<h3>📚 Completed Trade History</h3>
+<button class="stop" onclick="exportHistory()">Export History</button>
 <div class="tablewrap">
 <table>
-<thead><tr><th>Coin</th><th>Side</th><th>Entry</th><th>Exit</th><th>Result</th><th>P/L</th><th>Reason</th></tr></thead>
-<tbody id="history"><tr><td colspan="7">No completed trades</td></tr></tbody>
+<thead><tr><th>Symbol</th><th>Side</th><th>Entry</th><th>Exit</th><th>Result</th><th>P/L</th></tr></thead>
+<tbody id="history"><tr><td colspan="6">No completed trades</td></tr></tbody>
 </table>
 </div>
 </div>
 
 <div class="card">
-<h3>ℹ️ Important Information</h3>
+<h3>Information</h3>
 <p class="note">
-• This is a simulation only. No real money is used.<br>
-• Signals use EMA 9/21, RSI and MACD on 15m and 1h candles.<br>
-• Only aligned signals are considered for virtual entries.<br>
-• Maximum 3 simultaneous demo trades.<br>
-• Risk is calculated using the stop-loss distance, subject to the 3x exposure limit.<br>
-• Fees, funding and slippage are not included. Actual results will differ.<br>
-• Price checks are periodic, so fast price movements can cause missed simulated SL/TP touches.<br>
-• Data comes from Binance public market endpoints. API limits or network errors can cause incomplete scans.<br>
-• Trade history is saved in this browser's local storage. Clearing browser data may erase it.
+This is a virtual trading simulator. It does not send orders to Binance.<br>
+Signals are generated using EMA 9/21, RSI and MACD on 15-minute and 1-hour candles.<br>
+Only aligned LONG or SHORT signals are considered.<br>
+Maximum 3 open virtual trades. Risk is limited by the 3x exposure cap.<br>
+Trading fees, funding, slippage and exchange minimum order sizes are not included.<br>
+The scanner checks all eligible USDT perpetual contracts. API errors can cause incomplete scans.<br>
+Prices are checked every 10 seconds. Rapid price movements may be missed between checks.<br>
+History is stored in this browser. Clearing browser data may erase it.
 </p>
 </div>
-
 </main>
 
 <script>
 "use strict";
 
-const API = "https://fapi.binance.com";
-const CAPITAL = 20;
-const RISK = 0.05;
-const LEVERAGE = 3;
-const MAX_TRADES = 3;
-const TP_R = 1.5;
+const API="https://fapi.binance.com";
+const START=20;
+const RISK=0.05;
+const LEVERAGE=3;
+const MAX_OPEN=3;
+const RR=1.5;
 
-let running = false;
-let scanning = false;
-let scanTimer = null;
-let priceTimer = null;
-let lastSignals = [];
-let scannedCount = 0;
+let running=false;
+let busy=false;
+let scanTimer=null;
+let priceTimer=null;
+let signals=[];
+let count=0;
 
-let state = JSON.parse(localStorage.getItem("demoTradingState") || "null");
-
-if (!state || !Array.isArray(state.open) || !Array.isArray(state.history)) {
- state = {balance:CAPITAL, open:[], history:[], wins:0, losses:0};
+function loadState(){
+ try{
+  const s=JSON.parse(localStorage.getItem("demo_v2"));
+  if(s && Array.isArray(s.open) && Array.isArray(s.history)) return s;
+ }catch(e){}
+ return {balance:START,open:[],history:[],wins:0,losses:0};
 }
+
+let account=loadState();
 
 function save(){
- localStorage.setItem("demoTradingState",JSON.stringify(state));
+ localStorage.setItem("demo_v2",JSON.stringify(account));
  render();
-}
-
-function fmt(n){
- return Number(n).toFixed(6);
 }
 
 function money(n){
  return Number(n).toFixed(4);
 }
-
-function setStatus(s){
- document.getElementById("status").textContent=s;
+function priceFmt(n){
+ return Number(n).toPrecision(8);
 }
-
-async function api(path){
- const r=await fetch(API+path);
- if(!r.ok) throw new Error("Binance API error: "+r.status);
- return r.json();
+function wait(ms){
+ return new Promise(resolve=>setTimeout(resolve,ms));
+}
+function status(message){
+ document.getElementById("status").textContent=message;
+}
+async function getJSON(path){
+ const response=await fetch(API+path);
+ if(!response.ok) throw new Error("HTTP "+response.status);
+ return response.json();
 }
 
 function ema(values,period){
- let k=2/(period+1);
- let result=values[0];
+ const k=2/(period+1);
+ let value=values[0];
  for(let i=1;i<values.length;i++){
-  result=values[i]*k+result*(1-k);
+  value=values[i]*k+value*(1-k);
  }
- return result;
+ return value;
 }
 
-function rsi(values,period=14){
- let gains=0, losses=0;
- for(let i=values.length-period;i<values.length;i++){
-  let d=values[i]-values[i-1];
-  if(d>0) gains+=d;
-  else losses-=d;
+function calcRSI(values){
+ let gain=0,loss=0;
+ for(let i=values.length-14;i<values.length;i++){
+  const change=values[i]-values[i-1];
+  if(change>0) gain+=change;
+  else loss-=change;
  }
- if(losses===0) return 100;
- let rs=(gains/period)/(losses/period);
+ if(loss===0) return 100;
+ const rs=gain/loss;
  return 100-(100/(1+rs));
 }
 
-function macd(values){
- let fast=[],slow=[];
+function calcMACD(values){
+ const line=[];
  for(let i=0;i<values.length;i++){
-  fast.push(ema(values.slice(0,i+1),12));
-  slow.push(ema(values.slice(0,i+1),26));
+  const part=values.slice(0,i+1);
+  line.push(ema(part,12)-ema(part,26));
  }
- let line=fast.map((v,i)=>v-slow[i]);
- let signal=ema(line.slice(-9),9);
+ const signal=ema(line.slice(-9),9);
  return line[line.length-1]-signal;
 }
 
-function atr(candles,period=14){
- let tr=[];
+function calcATR(candles){
+ let ranges=[];
  for(let i=1;i<candles.length;i++){
-  let h=+candles[i][2], l=+candles[i][3], pc=+candles[i-1][4];
-  tr.push(Math.max(h-l,Math.abs(h-pc),Math.abs(l-pc)));
+  const high=+candles[i][2];
+  const low=+candles[i][3];
+  const previous=+candles[i-1][4];
+  ranges.push(Math.max(high-low,Math.abs(high-previous),Math.abs(low-previous)));
  }
- return tr.slice(-period).reduce((a,b)=>a+b,0)/period;
+ return ranges.slice(-14).reduce((a,b)=>a+b,0)/14;
 }
 
 async function analyze(symbol,interval){
- const data=await api(
+ const data=await getJSON(
   "/fapi/v1/klines?symbol="+symbol+"&interval="+interval+"&limit=100"
  );
- if(data.length<60) return null;
 
- // Exclude the currently forming candle.
+ if(!Array.isArray(data)||data.length<60) return null;
+
+ // Ignore the current unfinished candle.
  const candles=data.slice(0,-1);
- const closes=candles.map(c=>+c[4]);
+ const closes=candles.map(c=>Number(c[4]));
  const price=closes[closes.length-1];
- const e9=ema(closes.slice(-40),9);
- const e21=ema(closes.slice(-60),21);
- const rv=rsi(closes);
- const mh=macd(closes);
- const av=atr(candles);
 
- if(!av || !price || !Number.isFinite(rv)) return null;
+ const fast=ema(closes.slice(-40),9);
+ const slow=ema(closes.slice(-60),21);
+ const rsi=calcRSI(closes);
+ const macd=calcMACD(closes);
+ const atr=calcATR(candles);
 
- let side=null;
- if(e9>e21 && rv>=50 && rv<=68 && mh>0) side="LONG";
- if(e9<e21 && rv>=32 && rv<=50 && mh<0) side="SHORT";
+ let direction=null;
 
- return {symbol,interval,price,rsi:rv,atr:av,side,e9,e21};
+ if(fast>slow && rsi>=50 && rsi<=68 && macd>0)
+  direction="LONG";
+
+ if(fast<slow && rsi>=32 && rsi<=50 && macd<0)
+  direction="SHORT";
+
+ return {symbol,price,rsi,atr,direction};
 }
 
-async function scanSymbol(symbol){
+async function scanOne(symbol){
  try{
   const results=await Promise.all([
    analyze(symbol,"15m"),
    analyze(symbol,"1h")
   ]);
 
-  const a=results[0], b=results[1];
-  if(!a || !b || !a.side || a.side!==b.side) return null;
+  const a=results[0];
+  const b=results[1];
 
-  return {...a,confirm:"15m + 1h"};
+  if(!a||!b||!a.direction||a.direction!==b.direction) return null;
+
+  return {...a,confirmation:"15m + 1h"};
  }catch(e){
   return null;
  }
 }
 
 async function getSymbols(){
- const info=await api("/fapi/v1/exchangeInfo");
- return info.symbols
-  .filter(s=>s.status==="TRADING" &&
-   s.contractType==="PERPETUAL" &&
-   s.quoteAsset==="USDT")
-  .map(s=>s.symbol);
+ const info=await getJSON("/fapi/v1/exchangeInfo");
+ return info.symbols.filter(s=>
+  s.status==="TRADING" &&
+  s.contractType==="PERPETUAL" &&
+  s.quoteAsset==="USDT"
+ ).map(s=>s.symbol);
 }
 
 async function scanMarket(){
- if(scanning || !running) return;
- scanning=true;
- scannedCount=0;
- lastSignals=[];
- setStatus("Loading Binance USDT perpetual contracts...");
+ if(!running||busy) return;
+ busy=true;
+ count=0;
+ signals=[];
 
  try{
+  status("Getting Binance USDT perpetual contracts...");
   const symbols=await getSymbols();
-  const batchSize=5;
   let found=[];
 
-  for(let i=0;i<symbols.length;i+=batchSize){
+  for(let i=0;i<symbols.length;i+=8){
    if(!running) break;
 
-   const batch=symbols.slice(i,i+batchSize);
-   const results=await Promise.all(batch.map(scanSymbol));
+   const batch=symbols.slice(i,i+8);
+   const results=await Promise.all(batch.map(scanOne));
 
-   scannedCount+=batch.length;
-   results.forEach(x=>{if(x) found.push(x)});
+   count+=batch.length;
+   for(const result of results){
+    if(result) found.push(result);
+   }
 
-   document.getElementById("scanned").textContent=scannedCount;
-   setStatus("Scanning "+scannedCount+" / "+symbols.length+
-    " contracts · Signals found: "+found.length);
+   document.getElementById("scanned").textContent=count;
+   status("Scanning "+count+" / "+symbols.length+
+    " contracts. Signals: "+found.length);
 
-   await new Promise(r=>setTimeout(r,180));
+   await wait(250);
   }
 
   if(!running) return;
 
-  lastSignals=found.sort((a,b)=>Math.abs(b.rsi-50)-Math.abs(a.rsi-50));
-  renderSignals();
-  autoOpenTrades(lastSignals);
+  signals=found;
+  showSignals();
+  openSignals(found);
 
-  setStatus("Scan complete: "+scannedCount+
-   " contracts checked · "+lastSignals.length+
-   " aligned signals. Next scan in 2 minutes.");
+  status("Scan completed. "+count+" contracts checked. "+
+   found.length+" aligned signals. Next scan in 2 minutes.");
 
  }catch(e){
-  setStatus("Scan error: "+e.message+
-   ". Check connection or Binance API availability.");
+  status("Scan error: "+e.message+
+   ". Check internet or Binance API access.");
  }finally{
-  scanning=false;
-  if(running){
-   scanTimer=setTimeout(scanMarket,120000);
-  }
+  busy=false;
+  if(running) scanTimer=setTimeout(scanMarket,120000);
  }
 }
 
-function autoOpenTrades(signals){
- for(const s of signals){
-  if(state.open.length>=MAX_TRADES) break;
-  if(state.open.some(t=>t.symbol===s.symbol)) continue;
-
-  openTrade(s);
+function openSignals(list){
+ for(const s of list){
+  if(account.open.length>=MAX_OPEN) break;
+  if(account.open.some(t=>t.symbol===s.symbol)) continue;
+  createTrade(s);
  }
 }
 
-function openTrade(s){
+function createTrade(s){
  const entry=s.price;
  const distance=s.atr*1.5;
- if(!distance || distance<=0) return;
 
- const stop=s.side==="LONG"?entry-distance:entry+distance;
- const target=s.side==="LONG"?entry+distance*TP_R:entry-distance*TP_R;
+ if(!Number.isFinite(distance)||distance<=0) return;
 
- const qtyByRisk=RISK/distance;
- const qtyByMargin=(CAPITAL*LEVERAGE)/entry;
- const qty=Math.min(qtyByRisk,qtyByMargin);
+ const stop=s.direction==="LONG"?entry-distance:entry+distance;
+ const target=s.direction==="LONG"?
+  entry+distance*RR:entry-distance*RR;
 
- if(!Number.isFinite(qty) || qty<=0) return;
-
+ const qty=Math.min(RISK/distance,(account.balance*LEVERAGE)/entry);
  const margin=qty*entry/LEVERAGE;
- if(margin>state.balance) return;
 
- state.open.push({
+ if(!Number.isFinite(qty)||qty<=0||margin>account.balance) return;
+
+ account.open.push({
   id:Date.now()+"_"+s.symbol,
   symbol:s.symbol,
-  side:s.side,
-  entry,price:entry,stop,target,qty,margin,
-  risk:Math.abs(entry-stop)*qty,
+  side:s.direction,
+  entry,
+  current:entry,
+  stop,
+  target,
+  qty,
+  margin,
   opened:new Date().toISOString()
  });
-
- save();
-}
-
-async function updatePrices(){
- if(!state.open.length) return;
-
- for(const t of [...state.open]){
-  try{
-   const p=await api("/fapi/v1/premiumIndex?symbol="+t.symbol);
-   const price=+p.markPrice;
-   if(!price || !Number.isFinite(price)) continue;
-
-   t.price=price;
-
-   let hit=null;
-   if(t.side==="LONG"){
-    if(price<=t.stop) hit="STOP LOSS";
-    else if(price>=t.target) hit="TAKE PROFIT";
-   }else{
-    if(price>=t.stop) hit="STOP LOSS";
-    else if(price<=t.target) hit="TAKE PROFIT";
-   }
-
-   if(hit) closeTrade(t.id,price,hit);
-  }catch(e){}
- }
-
  save();
 }
 
 function closeTrade(id,exit,reason){
- const index=state.open.findIndex(t=>t.id===id);
- if(index<0) return;
+ const index=account.open.findIndex(t=>t.id===id);
+ if(index===-1) return;
 
- const t=state.open[index];
+ const t=account.open[index];
  const pnl=(t.side==="LONG"?exit-t.entry:t.entry-exit)*t.qty;
 
- state.balance+=pnl;
- if(pnl>=0) state.wins++;
- else state.losses++;
+ account.balance+=pnl;
 
- state.history.unshift({
-  symbol:t.symbol,side:t.side,entry:t.entry,exit,
-  pnl,reason,closed:new Date().toISOString()
+ if(pnl>=0) account.wins++;
+ else account.losses++;
+
+ account.history.unshift({
+  symbol:t.symbol,
+  side:t.side,
+  entry:t.entry,
+  exit,
+  pnl,
+  reason,
+  date:new Date().toISOString()
  });
 
- state.open.splice(index,1);
+ account.open.splice(index,1);
  save();
 }
 
-function renderSignals(){
- const el=document.getElementById("signals");
- if(!lastSignals.length){
-  el.innerHTML="<tr><td colspan='5'>No aligned signals found.</td></tr>";
+async function checkPrices(){
+ for(const t of [...account.open]){
+  try{
+   const data=await getJSON("/fapi/v1/premiumIndex?symbol="+t.symbol);
+   const p=Number(data.markPrice);
+   if(!p) continue;
+
+   t.current=p;
+   let reason=null;
+
+   if(t.side==="LONG"){
+    if(p<=t.stop) reason="STOP LOSS";
+    else if(p>=t.target) reason="TAKE PROFIT";
+   }else{
+    if(p>=t.stop) reason="STOP LOSS";
+    else if(p<=t.target) reason="TAKE PROFIT";
+   }
+
+   if(reason) closeTrade(t.id,p,reason);
+  }catch(e){}
+ }
+ save();
+}
+
+function showSignals(){
+ const body=document.getElementById("signals");
+
+ if(!signals.length){
+  body.innerHTML="<tr><td colspan='5'>No aligned signals found.</td></tr>";
   return;
  }
- el.innerHTML=lastSignals.slice(0,40).map(s=>
-  `<tr>
-   <td>${s.symbol}</td>
-   <td class="${s.side==="LONG"?"green":"red"}">${s.side}</td>
-   <td>${fmt(s.price)}</td>
-   <td>${s.rsi.toFixed(1)}</td>
-   <td>${s.confirm}</td>
-  </tr>`
+
+ body.innerHTML=signals.slice(0,40).map(s=>
+  "<tr><td>"+s.symbol+"</td>"+
+  "<td class='"+(s.direction==="LONG"?"green":"red")+"'>"+s.direction+"</td>"+
+  "<td>"+priceFmt(s.price)+"</td>"+
+  "<td>"+s.rsi.toFixed(1)+"</td>"+
+  "<td>"+s.confirmation+"</td></tr>"
  ).join("");
 }
 
 function render(){
- const realized=state.balance-CAPITAL;
- let unreal=0;
+ const unreal=account.open.reduce((sum,t)=>{
+  return sum+(t.side==="LONG"?
+   t.current-t.entry:t.entry-t.current)*t.qty;
+ },0);
 
- state.open.forEach(t=>{
-  unreal+=(t.side==="LONG"?t.price-t.entry:t.entry-t.price)*t.qty;
- });
+ const realized=account.balance-START;
 
- document.getElementById("balance").textContent=money(state.balance)+" USDT";
- document.getElementById("equity").textContent=money(state.balance+unreal)+" USDT";
+ document.getElementById("balance").textContent=money(account.balance)+" USDT";
+ document.getElementById("equity").textContent=money(account.balance+unreal)+" USDT";
 
- const pnlEl=document.getElementById("pnl");
- pnlEl.textContent=money(realized)+" USDT";
- pnlEl.className="value "+(realized>=0?"green":"red");
+ const pnl=document.getElementById("profit");
+ pnl.textContent=money(realized)+" USDT";
+ pnl.className=realized>=0?"green":"red";
 
+ const total=account.wins+account.losses;
  document.getElementById("winrate").textContent=
-  (state.wins+state.losses?
-   (state.wins/(state.wins+state.losses)*100).toFixed(1):"0")+"%";
+  (total?account.wins/total*100:0).toFixed(1)+"%";
 
- document.getElementById("wins").textContent=state.wins;
- document.getElementById("losses").textContent=state.losses;
- document.getElementById("openCount").textContent=state.open.length;
+ document.getElementById("openCount").textContent=account.open.length;
+ document.getElementById("wins").textContent=account.wins;
+ document.getElementById("losses").textContent=account.losses;
 
  document.getElementById("openTrades").innerHTML=
-  state.open.length?state.open.map(t=>{
-   let u=(t.side==="LONG"?t.price-t.entry:t.entry-t.price)*t.qty;
-   return `<tr>
-    <td>${t.symbol}</td>
-    <td>${t.side}</td>
-    <td>${fmt(t.entry)}</td>
-    <td>${fmt(t.price)}</td>
-    <td>${fmt(t.stop)}</td>
-    <td>${fmt(t.target)}</td>
-    <td class="${u>=0?"green":"red"}">${money(u)}</td>
-   </tr>`;
-  }).join(""):"<tr><td colspan='7'>No open trades</td></tr>";
+ account.open.length?account.open.map(t=>{
+  const u=(t.side==="LONG"?t.current-t.entry:t.entry-t.current)*t.qty;
+  return "<tr><td>"+t.symbol+"</td><td>"+t.side+"</td>"+
+   "<td>"+priceFmt(t.entry)+"</td><td>"+priceFmt(t.current)+"</td>"+
+   "<td>"+priceFmt(t.stop)+"</td><td>"+priceFmt(t.target)+"</td>"+
+   "<td class='"+(u>=0?"green":"red")+"'>"+money(u)+"</td></tr>";
+ }).join(""):"<tr><td colspan='7'>No open trades</td></tr>";
 
  document.getElementById("history").innerHTML=
-  state.history.length?state.history.slice(0,100).map(t=>
-   `<tr>
-    <td>${t.symbol}</td><td>${t.side}</td>
-    <td>${fmt(t.entry)}</td><td>${fmt(t.exit)}</td>
-    <td>${t.reason}</td>
-    <td class="${t.pnl>=0?"green":"red"}">${money(t.pnl)}</td>
-    <td>${new Date(t.closed).toLocaleString()}</td>
-   </tr>`
-  ).join(""):"<tr><td colspan='7'>No completed trades</td></tr>";
+ account.history.length?account.history.slice(0,100).map(t=>
+  "<tr><td>"+t.symbol+"</td><td>"+t.side+"</td>"+
+  "<td>"+priceFmt(t.entry)+"</td><td>"+priceFmt(t.exit)+"</td>"+
+  "<td>"+t.reason+"</td><td class='"+(t.pnl>=0?"green":"red")+"'>"+
+  money(t.pnl)+"</td></tr>"
+ ).join(""):"<tr><td colspan='6'>No completed trades</td></tr>";
 }
 
-function startScanner(){
+function startDemo(){
  if(running) return;
  running=true;
- document.getElementById("startBtn").disabled=true;
- scanMarket();
+ document.getElementById("startButton").disabled=true;
 
- if(priceTimer) clearInterval(priceTimer);
- priceTimer=setInterval(updatePrices,15000);
- setStatus("Demo scanner started.");
+ scanMarket();
+ priceTimer=setInterval(checkPrices,10000);
+ status("Scanner started.");
 }
 
-function stopScanner(){
+function stopDemo(){
  running=false;
- if(scanTimer) clearTimeout(scanTimer);
- if(priceTimer) clearInterval(priceTimer);
- document.getElementById("startBtn").disabled=false;
- setStatus("Scanner stopped. Open virtual trades remain saved.");
+ clearTimeout(scanTimer);
+ clearInterval(priceTimer);
+ document.getElementById("startButton").disabled=false;
+ status("Scanner stopped. Existing virtual trades are saved.");
 }
 
 function resetDemo(){
- if(!confirm("Delete all demo trades and reset balance to 20 USDT?")) return;
- stopScanner();
- state={balance:CAPITAL,open:[],history:[],wins:0,losses:0};
- lastSignals=[];
+ if(!confirm("Reset balance and delete all demo history?")) return;
+ stopDemo();
+ account={balance:START,open:[],history:[],wins:0,losses:0};
+ signals=[];
+ localStorage.removeItem("demo_v2");
  save();
- renderSignals();
- setStatus("Demo account reset.");
+ showSignals();
+ status("Demo account reset to 20 USDT.");
 }
 
 function exportHistory(){
- const blob=new Blob(
-  [JSON.stringify(state,null,2)],
-  {type:"application/json"}
- );
+ const blob=new Blob([JSON.stringify(account,null,2)],{type:"application/json"});
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
  a.href=url;
- a.download="binance-demo-history.json";
+ a.download="demo-trading-history.json";
  a.click();
  URL.revokeObjectURL(url);
 }
